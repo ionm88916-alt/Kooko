@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator Modern</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #74b9ff, #a29bfe);
+        }
+
+        .calculator {
+            background-color: #2d3436;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            width: 320px;
+        }
+
+        #display {
+            width: 100%;
+            height: 70px;
+            background-color: #1e272c;
+            color: #ffffff;
+            font-size: 2rem;
+            text-align: right;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            outline: none;
+            letter-spacing: 1px;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        button {
+            padding: 20px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background-color: #636e72;
+            color: white;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        button:hover {
+            background-color: #b2bec3;
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        .operator {
+            background-color: #e17055;
+        }
+
+        .operator:hover {
+            background-color: #fab1a0;
+        }
+
+        .equal {
+            background-color: #00b894;
+            grid-column: span 2;
+        }
+
+        .equal:hover {
+            background-color: #55efc4;
+        }
+
+        .clear {
+            background-color: #d63031;
+        }
+
+        .clear:hover {
+            background-color: #ff7675;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="calculator">
+        <input type="text" id="display" readonly value="0">
+        <div class="buttons">
+            <button class="clear" onclick="clearDisplay()">C</button>
+            <button onclick="appendCharacter('/')" class="operator">/</button>
+            <button onclick="appendCharacter('*')" class="operator">*</button>
+            <button onclick="deleteLast()" class="operator">⌫</button>
+
+            <button onclick="appendCharacter('7')">7</button>
+            <button onclick="appendCharacter('8')">8</button>
+            <button onclick="appendCharacter('9')">9</button>
+            <button onclick="appendCharacter('-')" class="operator">-</button>
+
+            <button onclick="appendCharacter('4')">4</button>
+            <button onclick="appendCharacter('5')">5</button>
+            <button onclick="appendCharacter('6')">6</button>
+            <button onclick="appendCharacter('+')" class="operator">+</button>
+
+            <button onclick="appendCharacter('1')">1</button>
+            <button onclick="appendCharacter('2')">2</button>
+            <button onclick="appendCharacter('3')">3</button>
+            <button onclick="appendCharacter('.')">.</button>
+
+            <button onclick="appendCharacter('0')">0</button>
+            <button class="equal" onclick="calculateResult()">=</button>
+        </div>
+    </div>
+
+    <script>
+        const display = document.getElementById('display');
+
+        function appendCharacter(char) {
+            if (display.value === '0' && char !== '.') {
+                display.value = char;
+            } else {
+                display.value += char;
+            }
+        }
+
+        function clearDisplay() {
+            display.value = '0';
+        }
+
+        function deleteLast() {
+            if (display.value.length > 1) {
+                display.value = display.value.slice(0, -1);
+            } else {
+                display.value = '0';
+            }
+        }
+
+        function calculateResult() {
+            try {
+                // Funcția eval() procesează șirul de caractere ca o expresie matematică
+                display.value = eval(display.value);
+            } catch (error) {
+                display.value = 'Eroare';
+                setTimeout(clearDisplay, 1500);
+            }
+        }
+    </script>
+
+</body>
+</html>
